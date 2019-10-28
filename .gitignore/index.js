@@ -49,7 +49,7 @@ module.exports.run = async(client, message, args) => {
 
     message.channel.bulkDelete(arg[0]);
 
-    message.channel.send('${args[0}} messages supp fdp');
+    message.channel.send('${args[0]} messages supp fdp');
 };
 
 module.exports.help = {
