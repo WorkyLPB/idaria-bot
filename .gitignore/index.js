@@ -8,4 +8,4 @@ bot.on('ready', function () {
     console.log("[LOG] iBot est désormais fonctionnel et connecté.")
 });
 
-bot.login("NjM4NDE1MzAzMzI3NjEyOTQ4.XbcZEQ.tDIfHbDfSFKDHZ0QWwmGvwCTo4s");
+bot.login(process.env.TOKEN);
