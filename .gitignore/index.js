@@ -40,19 +40,56 @@ bot.on('ready', function () {
  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝ ╚══════╝╚══════╝
 ──────────────────────────────────────────────────────────────────────────────────────────────────*/                                                                                
 
-module.exports.run = async(client, message, args) => {
+if(command === "tempmute") {
+ 
+    const ms = require('ms');
+ 
+let member = message.mentions.members.first() || message.guild.members.get(args[0]);
 
-    if(!message.guild.member(message.author).hasPermission("MANAGE_MESSAGES")) return message.channel.send('pas de perm fdp').catch(console.error);
-    if(!message.guild.member(client.user).hasPermission("MANAGE_MESSAGES")) return message.channel.send('^pas de perm fdp 2').catch(console.error);
-    if(!arg[0]) return message.channel.send('met un nombre de msg à supp fdp');
-    if(isNaN(arg[0])) return message.channel.send('invalide ta mère la reine des putes');
+if(!args[0])
+return message.channel.send("test2")
+if(!member)
+return message.channel.send("test1")
 
-    message.channel.bulkDelete(arg[0]);
+if(member.roles.some(r=>[""].includes(r.name)) )
+      return message.channel.send()
 
-    message.channel.send('${args[0]} messages supp fdp');
-};
-
-module.exports.help = {
-    name: "clear"
+let muterole = message.guild.roles.find(r => r.name === "fils de pute")
+if(!muterole) {
+  try{
+      muterole = await message.guild.createRole({
+          name: "fils de pute",
+          color: "#",
+          permissions: []
+      })
+      message.guild.channels.forEach(async (channel, id) => {
+          await channel.overwritePermissions(muterole, {
+              SEND_MESSAGES: false,
+              ADD_REACTIONS: false,
+              SEND_TTS_MESSAGES: false,
+              ATTACH_FILES: false,
+              SPEAK: false
+          })
+      })
+  } catch(e) {
+      console.log(e.stack);
+  }
 }
 
+let mutetime = args[1];
+if(!mutetime) return message.channel.send()
+ 
+let reason = args.slice(2).join(' ');
+if(!reason) reason = "";
+
+member.addRole(muterole.id).then(() => {
+                  message.delete().catch(O_o=>{});
+  member.send("test")
+  message.channel.send("test")
+})
+
+setTimeout(function(){
+  member.removeRole(muterole.id);
+  message.channel.send("test")
+}, ms(mutetime));
+}
